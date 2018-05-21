@@ -1,0 +1,1 @@
+add_test(all_test main.cpp)

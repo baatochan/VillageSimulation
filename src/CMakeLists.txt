@@ -1,0 +1,1 @@
+add_executable(SO2_Project main.cpp)
