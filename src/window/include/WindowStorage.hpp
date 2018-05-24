@@ -5,8 +5,11 @@
 #pragma once
 
 
-class WindowStorage
+namespace MainScreenManager
 {
+	class WindowStorage
+	{
 
-};
+	};
+}
 

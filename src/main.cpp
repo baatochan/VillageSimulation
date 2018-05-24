@@ -1,7 +1,7 @@
 #include <iostream>
+#include "ScreenManager.hpp"
 
 int main(int argc, char const *argv[])
 {
-	std::cout << "Hello World!" << std::endl;
-	return 0;
+	msm::ScreenManager::initialise(sf::VideoMode(600,400),{"Test"}, sf::Style::Default);
 }

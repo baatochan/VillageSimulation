@@ -4,6 +4,11 @@
 #pragma once
 
 #include <thread>
+#include <iostream>
+#include <SFML/Window/VideoMode.hpp>
+#include <SFML/System/String.hpp>
+#include "WindowStorage.hpp"
+#include "WindowHandler.hpp"
 
 namespace MainScreenManager
 {
@@ -22,11 +27,17 @@ namespace MainScreenManager
 	class ScreenManager
 	{
 		static std::thread screenManagerThread_;
+		static std::unique_ptr<WindowHandler> instance_;
 	public:
-		static void initialise();
-		static void cleanUp();
+		static void initialise(
+				sf::VideoMode const& videoMode
+				, sf::String const& title
+				, unsigned const& style
+				, std::shared_ptr<WindowStorage> windowStorage = nullptr
+		);
 		static void start();
 		static void stop();
+		static void cleanUp();
 	};
 }
 
