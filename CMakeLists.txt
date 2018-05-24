@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 set(CMAKE_CXX_STANDARD 17)
 include(ExternalProject)
 
-project(Black-Engine)
+project(SO2_Project)
 enable_testing()
 
 set(ERROR_FLAGS "-Wall -Werror -Wextra -Wfatal-errors -pedantic-errors")
