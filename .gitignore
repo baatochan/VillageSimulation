@@ -35,4 +35,4 @@
 # Idea #
 ########
 .idea/
-cmake-build-debug/
+cmake-*/
