@@ -19,6 +19,8 @@ ExternalProject_Add(SFML
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${SFML_INSTALL_LOCATION}
         )
 
+include_directories(include)
+
 include_directories(${GTEST_INSTALL_LOCATION}/include)
 link_directories(${GTEST_INSTALL_LOCATION}/lib)
 
