@@ -3,6 +3,7 @@
 //
 
 #include "ScreenManager.hpp"
+#include <functional>
 
 void MainScreenManager::ScreenManager::initialise(
 		sf::VideoMode const &videoMode
@@ -19,4 +20,26 @@ void MainScreenManager::ScreenManager::initialise(
 	);
 }
 
+void MainScreenManager::ScreenManager::start()
+{
+	screenManagerThread_ = std::thread{&msm::WindowHandler::Run, instance_.get()};
+}
+
+void MainScreenManager::ScreenManager::stop()
+{
+	instance_->Stop();
+}
+
+State const &MainScreenManager::ScreenManager::getAppStatus()
+{
+	return instance_->getStatus();
+}
+
+void MainScreenManager::ScreenManager::cleanUp()
+{
+	screenManagerThread_.join();
+}
+
+
 std::unique_ptr<msm::WindowHandler> msm::ScreenManager::instance_;
+std::thread msm::ScreenManager::screenManagerThread_;

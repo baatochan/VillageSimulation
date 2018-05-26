@@ -1,4 +1,11 @@
-add_executable(SO2_Project main.cpp window/src/ScreenManager.cpp window/include/ScreenManager.hpp window/src/WindowHandler.cpp window/include/WindowHandler.hpp window/src/WindowStorage.cpp window/include/WindowStorage.hpp)
+add_executable(SO2_Project main.cpp
+        window/src/ScreenManager.cpp
+        window/include/ScreenManager.hpp
+        window/src/WindowHandler.cpp
+        window/include/WindowHandler.hpp
+        window/src/WindowStorage.cpp
+        window/include/WindowStorage.hpp
+        )
 
 add_dependencies(SO2_Project GTEST SFML)
 

@@ -15,6 +15,7 @@ namespace MainScreenManager
 	)
 	{
 		renderWindow_ = std::make_unique<sf::RenderWindow>(videoMode, title, sf::Style::Default);
+		renderWindow_->setActive(false);
 
 		if ( windowStoragePtr )
 		{
@@ -24,5 +25,45 @@ namespace MainScreenManager
 		{
 //			windowStoragePtr_ = std::make_shared<WindowStorage>();
 		}
+	}
+
+	WindowHandler::~WindowHandler()
+	{}
+
+	void WindowHandler::Run()
+	{
+		// Switch window possession to current thread
+		renderWindow_->setActive(true);
+		state = State::RUNNING;
+
+		while( state != State::STOP )
+		{
+			sf::Event event{};
+			while (renderWindow_->pollEvent(event))
+			{
+				switch (event.type)
+				{
+					case sf::Event::Closed:
+						state = State::STOP;
+						renderWindow_->close();
+						break;
+				}
+			}
+
+			renderWindow_->clear(sf::Color::White);
+			renderWindow_->display();
+		}
+
+		state = State::STOPPED;
+	}
+
+	void WindowHandler::Stop()
+	{
+		state=State::STOP;
+	}
+
+	State const& WindowHandler::getStatus()
+	{
+		return state;
 	}
 }

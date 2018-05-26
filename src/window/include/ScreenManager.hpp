@@ -37,6 +37,8 @@ namespace MainScreenManager
 		);
 		static void start();
 		static void stop();
+		static State const& getAppStatus();
+
 		static void cleanUp();
 	};
 }
