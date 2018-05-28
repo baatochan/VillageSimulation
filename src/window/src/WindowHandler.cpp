@@ -27,9 +27,6 @@ namespace MainScreenManager
 		}
 	}
 
-	WindowHandler::~WindowHandler()
-	{}
-
 	void WindowHandler::Run()
 	{
 		// Switch window possession to current thread

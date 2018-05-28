@@ -26,6 +26,7 @@ namespace MainScreenManager
 	 */
 	class ScreenManager
 	{
+	protected:
 		static std::thread screenManagerThread_;
 		static std::unique_ptr<WindowHandler> instance_;
 	public:

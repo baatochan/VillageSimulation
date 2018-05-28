@@ -22,6 +22,7 @@ namespace MainScreenManager
 	*/
 	class WindowHandler
 	{
+	protected:
 		std::mutex windowHandlerMutex_;
 		State state=State::STOPPED;
 
@@ -54,7 +55,7 @@ namespace MainScreenManager
 				, std::shared_ptr<WindowStorage> const& windowStoragePtr
 		);
 
-		~WindowHandler();
+		~WindowHandler() = default;
 
 		void Run();
 		void Stop();
