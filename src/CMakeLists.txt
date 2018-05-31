@@ -1,22 +1,11 @@
-add_executable(SO2_Project main.cpp
-        window/src/ScreenManager.cpp
-        window/include/ScreenManager.hpp
-        window/src/WindowHandler.cpp
-        window/include/WindowHandler.hpp
-        window/src/WindowStorage.cpp
-        window/include/WindowStorage.hpp
-        interfaces/IDrawable.hpp
-        core/src/Place.cpp
-        core/include/Place.hpp
-#        main/MainController.cpp
-#        main/include/MainController.hpp
-        )
+add_executable(SO2_Project main.cpp)
 
 add_dependencies(SO2_Project GTEST SFML)
 
-include_directories(window/include)
-include_directories(core/include)
-include_directories(interfaces)
+include(main/CMakeLists.txt)
+include(core/CMakeLists.txt)
+include(interfaces/CMakeLists.txt)
+include(window/CMakeLists.txt)
 
 target_link_libraries(SO2_Project
         ${SFML_INSTALL_LOCATION}/lib/libsfml-audio.so

@@ -1,4 +1,4 @@
 target_sources(SO2_Project
-        include/MainController.hpp
-        MainController.cpp
+        PUBLIC main/include/MainController.hpp
+        PUBLIC main/MainController.cpp
         )
