@@ -3,6 +3,7 @@
 //
 
 #include <condition_variable>
+#include <Timer.hpp>
 #include "include/MainController.hpp"
 #include "FeedingTrough.hpp"
 

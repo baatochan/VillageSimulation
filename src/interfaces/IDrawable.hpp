@@ -13,13 +13,14 @@ namespace ManagedObject
 	{
 	public:
 		IDrawable() = default;
+
 		virtual ~IDrawable() = default;
 
 		/**
 		 * @brief Use this function carefully, as you are working on RAW object!
 		 * @return Returns PTR to object.
 		 */
-		virtual sf::Shape* getShape()=0;
+		virtual sf::Shape *getShape() = 0;
 	};
 }
 

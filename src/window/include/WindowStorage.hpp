@@ -44,5 +44,9 @@ namespace MainScreenManager
 		 */
 		void registerNewPlace(eng::Place* placePtr);
 		void registerNewAgent(eng::Place* placePtr);
+		/**
+		 * @return All registered places.
+		 */
+		std::vector<eng::Place*> const& getPlaces();
 	};
 }

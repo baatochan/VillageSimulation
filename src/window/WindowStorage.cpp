@@ -25,3 +25,8 @@ void MainScreenManager::WindowStorage::draw(sf::RenderWindow *targetWindow)
 		targetWindow->draw(*element->getShape());
 	}
 }
+
+std::vector<eng::Place *> const& MainScreenManager::WindowStorage::getPlaces()
+{
+	return placeVector_;
+}
