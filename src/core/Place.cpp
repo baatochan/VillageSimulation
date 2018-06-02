@@ -4,7 +4,7 @@
 
 #include "Place.hpp"
 
-sf::Drawable* Engine::Place::getDrawable()
+sf::Shape* Engine::Place::getShape()
 {
 	return drawable_.get();
 }
@@ -14,9 +14,10 @@ Engine::Place::Place(sf::Vector2f const &size, sf::Vector2f const &position)
 	drawable_ = std::make_shared<sf::RectangleShape>();
 	drawable_->setSize(size);
 	drawable_->setPosition(position);
+	drawable_->setFillColor(sf::Color::Black);
 }
 
-std::string const &Engine::Place::getName()
+std::string Engine::Place::getName()
 {
-	return name;
+	return std::string{"Place"};
 }

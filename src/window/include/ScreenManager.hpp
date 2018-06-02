@@ -34,7 +34,7 @@ namespace MainScreenManager
 				sf::VideoMode const& videoMode
 				, sf::String const& title
 				, unsigned const& style
-				, std::shared_ptr<WindowStorage> windowStorage = nullptr
+				, std::shared_ptr<WindowStorage> const& windowStorage = nullptr
 		);
 		static void start();
 		static void stop();

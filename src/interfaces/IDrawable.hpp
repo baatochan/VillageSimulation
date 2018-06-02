@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Shape.hpp>
 
 namespace ManagedObject
 {
@@ -19,7 +19,7 @@ namespace ManagedObject
 		 * @brief Use this function carefully, as you are working on RAW object!
 		 * @return Returns PTR to object.
 		 */
-		virtual sf::Drawable* getDrawable()=0;
+		virtual sf::Shape* getShape()=0;
 	};
 }
 

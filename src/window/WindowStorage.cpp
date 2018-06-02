@@ -18,10 +18,10 @@ void MainScreenManager::WindowStorage::draw(sf::RenderWindow *targetWindow)
 
 	for( auto element : placeVector_ )
 	{
-		targetWindow->draw(*element->getDrawable());
+		targetWindow->draw(*element->getShape());
 	}
 	for( auto element : drawableVector_ )
 	{
-		targetWindow->draw(*element->getDrawable());
+		targetWindow->draw(*element->getShape());
 	}
 }

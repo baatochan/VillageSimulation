@@ -8,23 +8,16 @@
 namespace MainScreenManager
 {
 	WindowHandler::WindowHandler(
-			sf::VideoMode const &videoMode
-			, sf::String const &title
+			sf::VideoMode const& videoMode
+			, sf::String const& title
 			, uint32_t style
-			, std::shared_ptr<WindowStorage> const &windowStoragePtr
+			, std::shared_ptr<WindowStorage> const& windowStoragePtr
 	)
 	{
 		renderWindow_ = std::make_unique<sf::RenderWindow>(videoMode, title, sf::Style::Default);
 		renderWindow_->setActive(false);
 
-		if ( windowStoragePtr )
-		{
-			windowStoragePtr_ = windowStoragePtr;
-		}
-		else
-		{
-//			windowStoragePtr_ = std::make_shared<WindowStorage>();
-		}
+		windowStoragePtr_ = windowStoragePtr ? windowStoragePtr : std::make_shared<WindowStorage>();
 	}
 
 	void WindowHandler::Run()
@@ -33,21 +26,21 @@ namespace MainScreenManager
 		renderWindow_->setActive(true);
 		state = State::RUNNING;
 
-		while( state != State::STOP )
+		while ( state != State::STOP )
 		{
 			sf::Event event{};
-			while (renderWindow_->pollEvent(event))
+			while ( renderWindow_->pollEvent(event))
 			{
-				switch (event.type)
+				switch ( event.type )
 				{
-					case sf::Event::Closed:
-						state = State::STOP;
+					case sf::Event::Closed: state = State::STOP;
 						renderWindow_->close();
 						break;
 				}
 			}
 
 			renderWindow_->clear(sf::Color::White);
+			windowStoragePtr_->draw(renderWindow_.get());
 			renderWindow_->display();
 		}
 
@@ -56,7 +49,7 @@ namespace MainScreenManager
 
 	void WindowHandler::Stop()
 	{
-		state=State::STOP;
+		state = State::STOP;
 	}
 
 	State const& WindowHandler::getStatus()

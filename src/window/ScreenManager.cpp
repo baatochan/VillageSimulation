@@ -9,7 +9,7 @@ void MainScreenManager::ScreenManager::initialise(
 		sf::VideoMode const &videoMode
 		, sf::String const &title
 		, unsigned const &style
-		, std::shared_ptr<MainScreenManager::WindowStorage> windowStorage
+		, std::shared_ptr<MainScreenManager::WindowStorage> const& windowStorage
 )
 {
 	instance_ = std::make_unique<WindowHandler>(

@@ -21,7 +21,6 @@ namespace Engine
 	class Place : public mo::IDrawable
 	{
 	protected:
-		std::string name;
 		std::shared_ptr<sf::RectangleShape> drawable_;
 	public:
 		/**
@@ -30,9 +29,13 @@ namespace Engine
 		 * @param position
 		 */
 		Place(sf::Vector2f const& size, sf::Vector2f const& position);
+		/**
+		 * @brief Be worry! You have to allocate shape yourself!
+		 */
+		Place() = default;
 
-		sf::Drawable* getDrawable() final;
-		virtual std::string const& getName();
+		sf::Shape* getShape() final;
+		virtual std::string getName();
 	};
 }
 
