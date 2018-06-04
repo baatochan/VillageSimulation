@@ -11,9 +11,12 @@
 #include <mutex>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "IDrawable.hpp"
+#include <spdlog/spdlog.h>
 
 namespace MainScreenManager
 {
+	namespace spd = spdlog;
+
 	class WindowStorage
 	{
 	protected:

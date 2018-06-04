@@ -6,6 +6,10 @@
 
 void MainScreenManager::WindowStorage::registerNewPlace(eng::Place *placePtr)
 {
+	spd::get("main")->info("Detected new place registration for: {}.", placePtr->getName());
+	if(!placePtr)
+		spd::get("main")->critical("Detected null registration!");
+
 	std::lock_guard<std::mutex> lockGuard(placeVectorMutex_);
 
 	placeVector_.push_back(placePtr);

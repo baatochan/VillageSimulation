@@ -12,6 +12,7 @@ void MainScreenManager::ScreenManager::initialise(
 		, std::shared_ptr<MainScreenManager::WindowStorage> const& windowStorage
 )
 {
+	spd::get("main")->info("Creating instance of Window Handler.");
 	instance_ = std::make_unique<WindowHandler>(
 			videoMode
 			, title
@@ -37,6 +38,7 @@ State const &MainScreenManager::ScreenManager::getAppStatus()
 
 void MainScreenManager::ScreenManager::cleanUp()
 {
+	spd::get("main")->info("Doing clean up.");
 	screenManagerThread_.join();
 }
 

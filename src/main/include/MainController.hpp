@@ -14,9 +14,11 @@ protected:
 
 	void allocateStorage();
 	void loadPlaces();
+	void initialiseLogger();
 
 public:
 	void init();
+	void close();
 
 	const std::shared_ptr<MainScreenManager::WindowStorage>& getWindowStorage() const;
 };

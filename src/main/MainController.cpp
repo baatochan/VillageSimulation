@@ -4,8 +4,12 @@
 
 #include <condition_variable>
 #include <Timer.hpp>
+#include <fstream>
+#include <spdlog/spdlog.h>
 #include "include/MainController.hpp"
 #include "FeedingTrough.hpp"
+
+namespace spd = spdlog;
 
 void MainController::init()
 {
@@ -13,6 +17,7 @@ void MainController::init()
 	std::mutex                   mutex;
 	std::unique_lock<std::mutex> scopedLock{mutex};
 
+	initialiseLogger();
 	allocateStorage();
 	loadPlaces();
 
@@ -26,6 +31,8 @@ void MainController::init()
 
 	// Join the thread, let him finish first.
 	msm::ScreenManager::cleanUp();
+	close();
+
 }
 
 const std::shared_ptr<MainScreenManager::WindowStorage>& MainController::getWindowStorage() const
@@ -35,10 +42,29 @@ const std::shared_ptr<MainScreenManager::WindowStorage>& MainController::getWind
 
 void MainController::loadPlaces()
 {
+	spd::get("main")->info("Loading places.");
 	windowStoragePtr_->registerNewPlace(new FeedingTrough);
+
 }
 
 void MainController::allocateStorage()
 {
+	spd::get("main")->info("Loading storage.");
 	windowStoragePtr_ = std::make_shared<msm::WindowStorage>();
+}
+
+void MainController::initialiseLogger()
+{
+	spd::basic_logger_mt("main", "logs/dump.log");
+	spd::get("main")->info("==================================================");
+	spd::get("main")->info("=                  Initialized                   =");
+	spd::get("main")->info("==================================================");
+	spd::get("main")->flush_on(spd::level::warn);
+}
+
+void MainController::close()
+{
+	spd::get("main")->info("==================================================");
+	spd::get("main")->info("=                    Finished                    =");
+	spd::get("main")->info("==================================================");
 }

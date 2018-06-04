@@ -3,7 +3,8 @@ add_executable(SO2_Project
         ../include/State.hpp
         )
 
-add_dependencies(SO2_Project GTEST SFML)
+add_dependencies(SO2_Project GTEST SFML SPDLOG)
+file(MAKE_DIRECTORY logs)
 
 include(main/CMakeLists.txt)
 include(core/CMakeLists.txt)
