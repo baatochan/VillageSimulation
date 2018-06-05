@@ -35,7 +35,7 @@ namespace Engine
 		Place() = default;
 
 		sf::Shape* getShape() final;
-		virtual std::string getName();
+		virtual std::string getName() const;
 	};
 }
 

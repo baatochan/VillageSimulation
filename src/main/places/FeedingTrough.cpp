@@ -14,7 +14,7 @@ FeedingTrough::FeedingTrough()
 	getShape()->setFillColor(sf::Color::Green);
 }
 
-std::string FeedingTrough::getName()
+std::string FeedingTrough::getName() const
 {
 	return "Feeding Trough";
 }

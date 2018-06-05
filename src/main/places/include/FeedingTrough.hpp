@@ -14,6 +14,6 @@ protected:
 public:
 	explicit FeedingTrough();
 
-	virtual std::string getName() override;
+	std::string getName() const final;
 };
 

@@ -17,7 +17,7 @@ Engine::Place::Place(sf::Vector2f const &size, sf::Vector2f const &position)
 	drawable_->setFillColor(sf::Color::Black);
 }
 
-std::string Engine::Place::getName()
+std::string Engine::Place::getName() const
 {
 	return std::string{"Place"};
 }
