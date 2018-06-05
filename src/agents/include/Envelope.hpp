@@ -9,16 +9,13 @@
 
 namespace Engine
 {
-	class Envelope
+	struct Envelope
 	{
-	protected:
 		int         amount;
-		Place       *target_;
-		std::string message_;
+		Place       *target;
+		std::string message;
 
-	public:
 		Envelope() = default;
-
 		Envelope(Place *target, std::string const& message = "", int amount = 0);
 	};
 }

@@ -12,23 +12,27 @@ namespace Engine
 {
 	class Agent : public mo::IDrawable
 	{
+		static int counter_;
 	protected:
-		Envelope envelope_;
-
+		bool available_;
 		sf::CircleShape circleShape_;
-		bool available = true;
+		std::unique_ptr<Envelope> envelope_;
 
+		std::string name_;
+
+	protected:
 		virtual void update() = 0;
+		void execute();
 	public:
 		Agent();
 
 		void run();
 		void stop();
 
-		void setOrder(Envelope envelope);
-		void goTo(Place place);
+		void setOrder(Envelope const& envelope);
+		void clearOrder();
 
-		virtual sf::Shape *getShape() override;
+		sf::Shape *getShape() override;
 	};
 }
 
