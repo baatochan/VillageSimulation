@@ -4,7 +4,7 @@
 
 #include "spdlog/spdlog.h"
 
-sf::Clock Timer::clock_;
+sf::Clock Timer::clock_; // NOLINT
 
 int main(int argc, char const *argv[])
 {
