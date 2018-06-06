@@ -11,7 +11,7 @@ FeedingTrough::FeedingTrough(const sf::Vector2f& size, const sf::Vector2f& posit
 {}
 
 FeedingTrough::FeedingTrough()
-		: Place({50, 100}, {100, 100})
+		: Place({50, 100}, {400, 400})
 {
 	getShape()->setFillColor(sf::Color::Green);
 }

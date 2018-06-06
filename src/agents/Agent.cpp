@@ -16,6 +16,7 @@ void Engine::Agent::run()
 		if ( envelope_ )
 			execute();
 	}
+	spdlog::get("main")->debug("{} is no more.", name_);
 }
 
 void Engine::Agent::execute()
@@ -49,11 +50,7 @@ Engine::Agent::Agent()
 {
 	spdlog::get("main")->debug("Created new agent: {}.", name_);
 
-	speed_ = 25.f;
-	moving_ = false;
-
 	lastUpdate_ = Timer::getClock().getElapsedTime();
-	knownLine_ = {};
 
 	circleShape_ = sf::CircleShape(10.f);
 	circleShape_.setFillColor(sf::Color::Black);
@@ -130,3 +127,8 @@ std::string const& Engine::Agent::getName() const
 }
 
 int eng::Agent::counter_=0;
+
+bool Engine::Agent::isAvailable() const
+{
+	return available_;
+}

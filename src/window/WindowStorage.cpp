@@ -2,6 +2,7 @@
 // Created by black on 24.05.18.
 //
 
+#include <God.hpp>
 #include "WindowStorage.hpp"
 
 void MainScreenManager::WindowStorage::registerNewPlace(std::shared_ptr<eng::Place> const& placePtr)
@@ -31,16 +32,17 @@ void MainScreenManager::WindowStorage::draw(sf::RenderWindow *targetWindow)
 	std::lock_guard<std::mutex> placeLockGuard(placeVectorMutex_);
 	std::lock_guard<std::mutex> agentLockGuard(agentMutex_);
 
+	for( auto const& element : God::getCreations() )
+	{
+		targetWindow->draw(*element->getShape());
+	}
 	for( auto const& elementWPtr : placeVector_ )
 	{
 		auto element = elementWPtr.lock();
 		if ( element )
+		{
 			targetWindow->draw(*element->getShape());
-	}
-	for( auto const& elementWPtr : agentVector_ )
-	{
-		auto element = elementWPtr.lock();
-		targetWindow->draw(*element->getShape());
+		}
 	}
 }
 

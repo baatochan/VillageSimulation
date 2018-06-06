@@ -7,6 +7,7 @@
 #include <fstream>
 #include <spdlog/spdlog.h>
 #include <Villager.hpp>
+#include <God.hpp>
 #include "include/MainController.hpp"
 #include "FeedingTrough.hpp"
 
@@ -21,17 +22,15 @@ void MainController::init()
 	loadPlaces();
 
 	// Create window, and window storage, used by agents.
-	msm::ScreenManager::initialise(sf::VideoMode(600, 400), {"Test"}, sf::Style::Default, windowStoragePtr_);
+	msm::ScreenManager::initialise(sf::VideoMode(800, 600), {"Test"}, sf::Style::Default, windowStoragePtr_);
 	msm::ScreenManager::start();
 
-	std::thread thread(std::bind(&eng::Agent::run, agents_.back()));
-	agents_.back()->setOrder(eng::Envelope(places_.back().get()));
+	summonGod();
 
 	// Wait for the app to close the window, and clean itself up.
 	var.wait(scopedLock, [&]()
 	{ return msm::ScreenManager::getAppStatus() == State::STOPPED; } );
 
-	thread.join();
 	// Join the thread, let him finish first.
 	msm::ScreenManager::cleanUp();
 	close();
@@ -46,11 +45,8 @@ const std::shared_ptr<MainScreenManager::WindowStorage>& MainController::getWind
 void MainController::loadPlaces()
 {
 	spd::get("main")->info("Loading places.");
-	places_.emplace_back(new FeedingTrough);
-	windowStoragePtr_->registerNewPlace(places_.back());
-
-	agents_.emplace_back(new Villager);
-	windowStoragePtr_->registerNewAgent(agents_.back());
+	places_.insert(std::pair("FT", new FeedingTrough));
+	windowStoragePtr_->registerNewPlace(places_["FT"]);
 }
 
 void MainController::allocateStorage()
@@ -71,6 +67,9 @@ void MainController::initialiseLogger()
 
 void MainController::close()
 {
+	spd::get("main")->info("Betraying God.");
+	GodThread.join();
+
 	spd::get("main")->info("==================================================");
 	spd::get("main")->info("=                    Finished                    =");
 	spd::get("main")->info("==================================================");
@@ -85,6 +84,16 @@ MainController& MainController::getInstance()
 void MainController::stop()
 {
 	var.notify_all();
+}
+
+void MainController::summonGod()
+{
+	GodThread = std::thread(God::run);
+}
+
+std::map<std::string, std::shared_ptr<Engine::Place>> const& MainController::getPlaces() const
+{
+	return places_;
 }
 
 MainController* MainController::instance_;

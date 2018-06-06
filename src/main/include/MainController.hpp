@@ -15,21 +15,24 @@ protected:
 	std::mutex                   mutex;
 	std::unique_lock<std::mutex> scopedLock{mutex};
 
-	std::vector<std::shared_ptr<eng::Place>> places_;
-	std::vector<std::shared_ptr<eng::Agent>> agents_;
+	std::map<std::string, std::shared_ptr<eng::Place>> places_;
 	std::shared_ptr<msm::WindowStorage>      windowStoragePtr_;
+
+	std::thread GodThread;
 
 	void allocateStorage();
 	void loadPlaces();
 	void initialiseLogger();
+	void summonGod();
 
 public:
 	void init();
 	void stop();
 	void close();
 
-	static MainController& getInstance();
+	std::map<std::string, std::shared_ptr<Engine::Place>> const& getPlaces() const;
+	std::shared_ptr<MainScreenManager::WindowStorage> const& getWindowStorage() const;
 
-	const std::shared_ptr<MainScreenManager::WindowStorage>& getWindowStorage() const;
+	static MainController& getInstance();
 };
 

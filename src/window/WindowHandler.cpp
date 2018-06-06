@@ -5,6 +5,7 @@
 #include "WindowHandler.hpp"
 #include <SFML/Graphics.hpp>
 #include <MainController.hpp>
+#include <God.hpp>
 
 namespace MainScreenManager
 {
@@ -39,6 +40,11 @@ namespace MainScreenManager
 						spd::get("main")->info("User closed the window.");
 						state = State::STOP;
 						renderWindow_->close();
+						break;
+					case sf::Event::KeyPressed:
+						if ( event.key.code == sf::Keyboard::Num0 )
+							spd::get("main")->info("User requested Villager creation...");
+							God::createVillager();
 						break;
 				}
 			}

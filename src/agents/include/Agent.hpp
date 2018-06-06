@@ -21,9 +21,9 @@ namespace Engine
 		std::unique_ptr<Envelope>   envelope_;
 		std::optional<sf::Vector3f> knownLine_;
 
-		bool  available_;
-		bool  moving_;
-		float speed_;
+		bool  available_{true};
+		bool  moving_{false};
+		float speed_{50};
 
 		sf::Time        lastUpdate_;
 		sf::CircleShape circleShape_;
@@ -45,6 +45,7 @@ namespace Engine
 		void setOrder(Envelope const& envelope);
 		void clearOrder();
 
+		bool isAvailable() const;
 		virtual std::string const& getName() const;
 		sf::Shape *getShape() override;
 	};
