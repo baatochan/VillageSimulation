@@ -23,6 +23,7 @@ protected:
 	void allocateStorage();
 	void loadPlaces();
 	void initialiseLogger();
+	void registerOrders();
 	void summonGod();
 
 public:

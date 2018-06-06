@@ -13,7 +13,10 @@ void Villager::update()
 		if ( !(envelope_  && envelope_->target->getName() == "Feeding Trough") )
 		{
 			spdlog::get("main")->debug("{} is hungry/thirsty.", name_);
-			envelope_ = std::make_unique<eng::Envelope>(MainController::getInstance().getPlaces().find("FT")->second);
+			setOrder(Engine::Envelope{
+					MainController::getInstance().getPlaces().find("FT")->second
+					, "Refill"
+					, 100});
 		}
 	}
 }
@@ -25,6 +28,9 @@ Villager::Villager()
 
 void Villager::consume()
 {
+	std::lock_guard <std::mutex> lockGuardFood(foodMutex);
+	std::lock_guard <std::mutex> lockGuardWater(drinkMutex);
+
 	if ( !lastRefreshInterval )
 	{
 		lastRefreshInterval = Timer::getClock().getElapsedTime();
@@ -45,4 +51,35 @@ void Villager::consume()
 		available_ = false;
 	}
 
+}
+
+void Villager::refillFood(int amount)
+{
+	std::this_thread::sleep_for(std::chrono::milliseconds(10*amount));
+
+	std::lock_guard<std::mutex> lockGuard(foodMutex);
+	foodLevel += amount;
+}
+
+void Villager::refillWater(int amount)
+{
+	std::this_thread::sleep_for(std::chrono::milliseconds(5*amount));
+
+	std::lock_guard<std::mutex> lockGuard(drinkMutex);
+	waterLevel += amount;
+}
+
+float Villager::getWaterLevel() const
+{
+	return waterLevel;
+}
+
+float Villager::getFoodLevel() const
+{
+	return foodLevel;
+}
+
+bool Villager::isHungry()
+{
+	return foodLevel < 50 || waterLevel < 50;
 }

@@ -42,9 +42,14 @@ namespace MainScreenManager
 						renderWindow_->close();
 						break;
 					case sf::Event::KeyPressed:
-						if ( event.key.code == sf::Keyboard::Num0 )
+						if ( event.key.code == sf::Keyboard::Numpad0)
+						{
 							spd::get("main")->info("User requested Villager creation...");
 							God::createVillager();
+						} else if (event.key.code == sf::Keyboard::P)
+						{
+							God::print();
+						}
 						break;
 				}
 			}

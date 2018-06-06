@@ -8,6 +8,8 @@
 #include <spdlog/spdlog.h>
 #include <Villager.hpp>
 #include <God.hpp>
+#include <Rally.hpp>
+#include <Quarry.hpp>
 #include "include/MainController.hpp"
 #include "FeedingTrough.hpp"
 
@@ -25,6 +27,7 @@ void MainController::init()
 	msm::ScreenManager::initialise(sf::VideoMode(800, 600), {"Test"}, sf::Style::Default, windowStoragePtr_);
 	msm::ScreenManager::start();
 
+	registerOrders();
 	summonGod();
 
 	// Wait for the app to close the window, and clean itself up.
@@ -45,8 +48,15 @@ const std::shared_ptr<MainScreenManager::WindowStorage>& MainController::getWind
 void MainController::loadPlaces()
 {
 	spd::get("main")->info("Loading places.");
+
 	places_.insert(std::pair("FT", new FeedingTrough));
 	windowStoragePtr_->registerNewPlace(places_["FT"]);
+
+	places_.insert(std::pair("RL", new Rally));
+	windowStoragePtr_->registerNewPlace(places_["RL"]);
+
+	places_.insert(std::pair("QR", new Quarry));
+	windowStoragePtr_->registerNewPlace(places_["QR"]);
 }
 
 void MainController::allocateStorage()
@@ -94,6 +104,14 @@ void MainController::summonGod()
 std::map<std::string, std::shared_ptr<Engine::Place>> const& MainController::getPlaces() const
 {
 	return places_;
+}
+
+void MainController::registerOrders()
+{
+	for ( auto const& element : places_)
+	{
+		element.second->registerYourself();
+	}
 }
 
 MainController* MainController::instance_;

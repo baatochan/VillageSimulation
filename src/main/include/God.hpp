@@ -23,6 +23,7 @@ protected:
 	static void end();
 public:
 	static void run();
+	static void print();
 	static std::weak_ptr<Villager> createVillager();
 	static std::list<std::shared_ptr<Villager>> const& getCreations();
 };

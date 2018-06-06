@@ -64,3 +64,16 @@ void God::clear()
 		i--;
 	}
 }
+
+void God::print()
+{
+	std::lock_guard<std::mutex> lockGuard(villagerMutex_);
+
+	for ( auto const& villager : creations_)
+	{
+		std::cout << villager->getName() << " is alive. Food/Water: "
+				  << villager->getFoodLevel() << "/"
+				  << villager->getWaterLevel() << ".\n";
+	}
+	std::cout << "\n";
+}

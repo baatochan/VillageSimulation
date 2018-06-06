@@ -37,7 +37,8 @@ namespace Engine
 		 */
 		Place() = default;
 
-		virtual void execute(Agent const& agent) = 0;
+		virtual void registerYourself() {}
+		virtual void execute(Agent* agent) = 0;
 		sf::Shape* getShape() final;
 		virtual std::string getName() const;
 	};

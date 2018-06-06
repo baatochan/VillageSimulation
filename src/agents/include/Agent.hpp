@@ -45,6 +45,8 @@ namespace Engine
 		void setOrder(Envelope const& envelope);
 		void clearOrder();
 
+		std::unique_ptr<Envelope> const& getEnvelope() const;
+
 		bool isAvailable() const;
 		virtual std::string const& getName() const;
 		sf::Shape *getShape() override;
