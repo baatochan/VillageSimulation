@@ -39,14 +39,14 @@ void Quarry::execute(Engine::Agent *agent)
 		}
 	}
 
-	spdlog::get("main")->debug("{} started mining!");
+	spdlog::get("main")->info("{} started mining!", agent->getName());
 	auto tool = toolsQueue_.front();
 	toolsQueue_.pop();
 	uniqueLock.unlock();
 
 	std::this_thread::sleep_for(std::chrono::seconds(10));
 
-	spdlog::get("main")->info("{} got a lot of ore!");
+	spdlog::get("main")->info("{} got a lot of ore!", agent->getName());
 	uniqueLock.lock();
 	toolsQueue_.push(tool);
 	toolsSubscription_.notify_one();
