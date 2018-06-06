@@ -4,7 +4,7 @@
 
 #pragma once
 
-
+#include <utility>
 #include <Place.hpp>
 
 namespace Engine
@@ -16,7 +16,9 @@ namespace Engine
 		std::string message;
 
 		Envelope() = default;
-		Envelope(Place *target, std::string const& message = "", int amount = 0);
+		explicit Envelope(Place *target, std::string message = "", int amount = 0)
+				: target(target), message(std::move(message)), amount(amount)
+		{}
 	};
 }
 

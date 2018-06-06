@@ -12,6 +12,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "IDrawable.hpp"
 #include <spdlog/spdlog.h>
+#include <Agent.hpp>
 
 namespace MainScreenManager
 {
@@ -24,7 +25,8 @@ namespace MainScreenManager
 		std::mutex agentMutex_;
 
 		std::vector<mo::IDrawable*> drawableVector_;
-		std::vector<eng::Place*> placeVector_;
+		std::vector<std::weak_ptr<eng::Agent>> agentVector_;
+		std::vector<std::weak_ptr<eng::Place>> placeVector_;
 	public:
 		WindowStorage() = default;
 		~WindowStorage() = default;
@@ -45,11 +47,11 @@ namespace MainScreenManager
 		 * @param placePtr
 		 * 		Element to be added to the vector
 		 */
-		void registerNewPlace(eng::Place* placePtr);
-		void registerNewAgent(eng::Place* placePtr);
+		void registerNewPlace(std::shared_ptr<eng::Place> const& placePtr);
+		void registerNewAgent(std::shared_ptr<eng::Agent> const& agentPtr);
 		/**
 		 * @return All registered places.
 		 */
-		std::vector<eng::Place*> const& getPlaces();
+		std::vector<std::weak_ptr<eng::Place>> const& getPlaces();
 	};
 }

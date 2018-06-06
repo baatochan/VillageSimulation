@@ -12,5 +12,3 @@ public:
 	static sf::Clock const& getClock()
 	{ return clock_; }
 };
-
-sf::Clock Timer::clock_;

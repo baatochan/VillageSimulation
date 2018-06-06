@@ -6,6 +6,7 @@
 
 
 #include <Place.hpp>
+#include <Agent.hpp>
 
 class FeedingTrough : public eng::Place
 {
@@ -15,5 +16,7 @@ public:
 	explicit FeedingTrough();
 
 	std::string getName() const final;
+
+	virtual void execute(Agent const& agent) override final;
 };
 

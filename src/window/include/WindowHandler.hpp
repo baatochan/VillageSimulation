@@ -24,7 +24,7 @@ namespace MainScreenManager
 	{
 	protected:
 		std::mutex windowHandlerMutex_;
-		State state=State::STOPPED;
+		State state=State::STARTING;
 
 		std::unique_ptr<sf::RenderWindow> renderWindow_;
 		std::shared_ptr<WindowStorage> windowStoragePtr_;

@@ -13,9 +13,7 @@ namespace spd = spdlog;
 
 void MainController::init()
 {
-	std::condition_variable      var;
-	std::mutex                   mutex;
-	std::unique_lock<std::mutex> scopedLock{mutex};
+	instance_ = this;
 
 	initialiseLogger();
 	allocateStorage();
@@ -25,10 +23,14 @@ void MainController::init()
 	msm::ScreenManager::initialise(sf::VideoMode(600, 400), {"Test"}, sf::Style::Default, windowStoragePtr_);
 	msm::ScreenManager::start();
 
+	std::thread thread(std::bind(&eng::Agent::run, agents_.back()));
+	agents_.back()->setOrder(eng::Envelope(places_.back().get()));
+
 	// Wait for the app to close the window, and clean itself up.
 	var.wait(scopedLock, [&]()
-	{ return msm::ScreenManager::getAppStatus() == State::STOPPED; });
+	{ return msm::ScreenManager::getAppStatus() == State::STOPPED; } );
 
+	thread.join();
 	// Join the thread, let him finish first.
 	msm::ScreenManager::cleanUp();
 	close();
@@ -43,8 +45,11 @@ const std::shared_ptr<MainScreenManager::WindowStorage>& MainController::getWind
 void MainController::loadPlaces()
 {
 	spd::get("main")->info("Loading places.");
-	windowStoragePtr_->registerNewPlace(new FeedingTrough);
+	places_.emplace_back(new FeedingTrough);
+	windowStoragePtr_->registerNewPlace(places_.back());
 
+	agents_.emplace_back(new eng::Agent);
+	windowStoragePtr_->registerNewAgent(agents_.back());
 }
 
 void MainController::allocateStorage()
@@ -59,7 +64,8 @@ void MainController::initialiseLogger()
 	spd::get("main")->info("==================================================");
 	spd::get("main")->info("=                  Initialized                   =");
 	spd::get("main")->info("==================================================");
-	spd::get("main")->flush_on(spd::level::warn);
+	spd::get("main")->flush_on(spd::level::info);
+	spd::get("main")->set_level(spdlog::level::debug);
 }
 
 void MainController::close()
@@ -67,4 +73,17 @@ void MainController::close()
 	spd::get("main")->info("==================================================");
 	spd::get("main")->info("=                    Finished                    =");
 	spd::get("main")->info("==================================================");
+	spd::get("main")->flush();
 }
+
+MainController& MainController::getInstance()
+{
+	return *instance_;
+}
+
+void MainController::stop()
+{
+	var.notify_all();
+}
+
+MainController* MainController::instance_;

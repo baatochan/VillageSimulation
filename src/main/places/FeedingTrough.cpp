@@ -2,6 +2,7 @@
 // Created by black on 02.06.18.
 //
 
+#include <spdlog/spdlog.h>
 #include "include/FeedingTrough.hpp"
 
 FeedingTrough::FeedingTrough(const sf::Vector2f& size, const sf::Vector2f& position)
@@ -17,4 +18,9 @@ FeedingTrough::FeedingTrough()
 std::string FeedingTrough::getName() const
 {
 	return "Feeding Trough";
+}
+
+void FeedingTrough::execute(Agent const& agent)
+{
+
 }

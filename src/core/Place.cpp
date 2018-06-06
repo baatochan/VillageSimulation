@@ -2,7 +2,9 @@
 // Created by black on 27.05.18.
 //
 
+#include <spdlog/spdlog.h>
 #include "Place.hpp"
+#include "Agent.hpp"
 
 sf::Shape* Engine::Place::getShape()
 {
@@ -21,3 +23,4 @@ std::string Engine::Place::getName() const
 {
 	return std::string{"Place"};
 }
+

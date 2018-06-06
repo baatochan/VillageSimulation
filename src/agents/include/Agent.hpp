@@ -6,30 +6,50 @@
 
 
 #include <SFML/Graphics/CircleShape.hpp>
+#include <optional>
+#include <SFML/System/Time.hpp>
+#include <SFML/System.hpp>
 #include "Envelope.hpp"
 
 namespace Engine
 {
-	class Agent : public mo::IDrawable
+	class Agent
+			: public mo::IDrawable
 	{
+	public:
+		std::string const& getName() const;
+
+	private:
 		static int counter_;
 	protected:
-		bool available_;
+		std::unique_ptr<Envelope>   envelope_;
+		std::optional<sf::Vector3f> knownLine_;
+
+		bool  available_;
+		bool  moving_;
+		float speed_;
+
+		sf::Time        lastUpdate_;
 		sf::CircleShape circleShape_;
-		std::unique_ptr<Envelope> envelope_;
 
 		std::string name_;
 
 	protected:
-		virtual void update() = 0;
+//		virtual void update() = 0;
+
 		void execute();
+		void move();
+		void calculateLine();
+
 	public:
 		Agent();
 
 		void run();
+
 		void stop();
 
 		void setOrder(Envelope const& envelope);
+
 		void clearOrder();
 
 		sf::Shape *getShape() override;

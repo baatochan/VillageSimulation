@@ -4,6 +4,7 @@
 
 #include "WindowHandler.hpp"
 #include <SFML/Graphics.hpp>
+#include <MainController.hpp>
 
 namespace MainScreenManager
 {
@@ -28,12 +29,15 @@ namespace MainScreenManager
 
 		while ( state != State::STOP )
 		{
+			renderWindow_->setFramerateLimit(60);
 			sf::Event event{};
 			while ( renderWindow_->pollEvent(event))
 			{
 				switch ( event.type )
 				{
-					case sf::Event::Closed: state = State::STOP;
+					case sf::Event::Closed:
+						spd::get("main")->info("User closed the window.");
+						state = State::STOP;
 						renderWindow_->close();
 						break;
 				}
@@ -45,6 +49,8 @@ namespace MainScreenManager
 		}
 
 		state = State::STOPPED;
+		spdlog::get("main")->info("WindowHandler folded correctly.");
+		MainController::getInstance().stop();
 	}
 
 	void WindowHandler::Stop()
