@@ -12,7 +12,7 @@ void Engine::Agent::run()
 	while ( available_ && msm::ScreenManager::getAppStatus() != State::STOPPED )
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-//		update();
+		update();
 		if ( envelope_ )
 			execute();
 	}
@@ -36,7 +36,7 @@ void Engine::Agent::execute()
 void Engine::Agent::setOrder(Envelope const& envelope)
 {
 	spdlog::get("main")->debug(
-			"New order for {}, from {}. Order: {}."
+			"New order for {}. Target: {}. Order: {}."
 			, name_
 			, envelope.target->getName()
 			, envelope.message
@@ -73,9 +73,6 @@ void Engine::Agent::clearOrder()
 void Engine::Agent::stop() { available_ = false; }
 sf::Shape *Engine::Agent::getShape() { return &circleShape_; }
 
-
-int eng::Agent::counter_=0;
-
 void Engine::Agent::move()
 {
 	if ( !moving_ )
@@ -98,14 +95,13 @@ void Engine::Agent::move()
 	getShape()->move({distanceX,distanceY});
 
 	float const& targetX = envelope_->target->getShape()->getPosition().x;
-	float const& targetY = envelope_->target->getShape()->getPosition().y;
 	float const& positionX = circleShape_.getPosition().x;
-	float const& positionY = circleShape_.getPosition().y;
 
 	if ( (positionX > targetX && lastPosition.x < targetX) || (positionX < targetX && lastPosition.x > targetX) )
 	{
 		spdlog::get("main")->debug("{} arrived at the destination.", name_);
 		spdlog::get("main")->flush();
+		envelope_->target->execute(*this);
 		envelope_ = {};
 		moving_ = false;
 	}
@@ -126,10 +122,11 @@ void Engine::Agent::calculateLine()
    			, a
 			, b
 			, angle);
-	spdlog::get("main")->flush();
 }
 
 std::string const& Engine::Agent::getName() const
 {
 	return name_;
 }
+
+int eng::Agent::counter_=0;

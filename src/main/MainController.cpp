@@ -6,6 +6,7 @@
 #include <Timer.hpp>
 #include <fstream>
 #include <spdlog/spdlog.h>
+#include <Villager.hpp>
 #include "include/MainController.hpp"
 #include "FeedingTrough.hpp"
 
@@ -48,7 +49,7 @@ void MainController::loadPlaces()
 	places_.emplace_back(new FeedingTrough);
 	windowStoragePtr_->registerNewPlace(places_.back());
 
-	agents_.emplace_back(new eng::Agent);
+	agents_.emplace_back(new Villager);
 	windowStoragePtr_->registerNewAgent(agents_.back());
 }
 
@@ -64,7 +65,7 @@ void MainController::initialiseLogger()
 	spd::get("main")->info("==================================================");
 	spd::get("main")->info("=                  Initialized                   =");
 	spd::get("main")->info("==================================================");
-	spd::get("main")->flush_on(spd::level::info);
+	spd::get("main")->flush_on(spd::level::debug);
 	spd::get("main")->set_level(spdlog::level::debug);
 }
 

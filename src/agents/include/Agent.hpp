@@ -16,12 +16,8 @@ namespace Engine
 	class Agent
 			: public mo::IDrawable
 	{
-	public:
-		std::string const& getName() const;
-
-	private:
-		static int counter_;
 	protected:
+		static int counter_;
 		std::unique_ptr<Envelope>   envelope_;
 		std::optional<sf::Vector3f> knownLine_;
 
@@ -35,7 +31,7 @@ namespace Engine
 		std::string name_;
 
 	protected:
-//		virtual void update() = 0;
+		virtual void update() = 0;
 
 		void execute();
 		void move();
@@ -45,13 +41,11 @@ namespace Engine
 		Agent();
 
 		void run();
-
 		void stop();
-
 		void setOrder(Envelope const& envelope);
-
 		void clearOrder();
 
+		virtual std::string const& getName() const;
 		sf::Shape *getShape() override;
 	};
 }

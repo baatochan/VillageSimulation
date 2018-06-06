@@ -8,10 +8,12 @@
 #include <IDrawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
+#include <Agent.hpp>
 
-class Agent;
+//class Agent;
 namespace Engine
 {
+	class Agent;
 	/**
 	 * @brief
 	 * 		Base class for any structure in the project.

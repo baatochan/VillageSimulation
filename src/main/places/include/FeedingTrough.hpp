@@ -17,6 +17,6 @@ public:
 
 	std::string getName() const final;
 
-	virtual void execute(Agent const& agent) override final;
+	void execute(eng::Agent const& agent) final;
 };
 

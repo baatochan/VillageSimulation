@@ -9,11 +9,12 @@
 
 namespace Engine
 {
+	class Place;
 	struct Envelope
 	{
-		int         amount;
-		Place       *target;
-		std::string message;
+		int         amount{0};
+		Place       *target{nullptr};
+		std::string message{};
 
 		Envelope() = default;
 		explicit Envelope(Place *target, std::string message = "", int amount = 0)
