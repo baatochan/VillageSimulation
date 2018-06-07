@@ -126,7 +126,7 @@ void FeedingTrough::acceptWater(eng::Agent *agent)
 
 	waterAmount_+=amount*150;
 
-	spdlog::get("main")->debug("Water amount: {}", waterAmount_);
+	spdlog::get("main")->info("Water amount: {}", waterAmount_);
 	agent->setOrder(
 			eng::Envelope{ MainController::getInstance().getPlaces().find("RL")->second }
 	);
@@ -140,7 +140,7 @@ void FeedingTrough::acceptFood(eng::Agent *agent)
 
 	foodAmount_+=amount*150;
 
-	spdlog::get("main")->debug("Food amount: {}", foodAmount_);
+	spdlog::get("main")->info("Food amount: {}", foodAmount_);
 	agent->setOrder(
 			eng::Envelope{ MainController::getInstance().getPlaces().find("RL")->second }
 	);

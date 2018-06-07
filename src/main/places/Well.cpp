@@ -10,6 +10,14 @@ void Well::execute(Engine::Agent *agent)
 {
 	if ( agent->getEnvelope()->message == "Well using." )
 	{
+		std::unique_lock<std::mutex> uniqueLock(wellerMutex_);
+		if ( amountOfWellers_ == 2 )
+		{
+			agent -> setOrder(eng::Envelope{
+				MainController::getInstance().getPlaces().find("RL")->second
+				});
+		}
+		uniqueLock.unlock();00000000000000
 		useWell(agent);
 	}
 	else
@@ -62,7 +70,7 @@ void Well::useWell(eng::Agent *agent)
 	{
 		wellers_.first = agent;
 		partnerHolder_.wait( uniqueLock, [&](){
-			return amountOfWellers_==0;
+			return amountOfWellers_ == 0;
 		});
 	}
 	else
@@ -98,6 +106,20 @@ void Well::useWell(eng::Agent *agent)
 void Well::transport(eng::Agent* agent)
 {
 	std::lock_guard<std::mutex> lockGuard(bucketMutex_);
+
+	eng::Envelope const* offer = nullptr;
+	for ( auto const& element : rally_->getOfferList() )
+	{
+		if ( element.message ==  "Well using." )
+		{
+			offer = &element;
+		}
+	}
+
+	if ( !offer && amountOfWellers_ == 0 )
+	{
+		registerYourself();
+	}
 
 	agent->setOrder(
 			eng::Envelope(

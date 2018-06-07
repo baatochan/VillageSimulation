@@ -31,13 +31,7 @@ void Farm::execute(Engine::Agent *agent)
 		std::lock_guard<std::mutex> lockGuard(bundleAccessMutex_);
 		uniqueLock.lock();
 
-		if ( bundles_ + 5 < desiredBundles_
-		 	&& amountOfWorkers_ <= 5
-			&& amountOfWorkers_ > 4
-				)
-		{
-			registerYourself();
-		}
+		registerYourself();
 		amountOfWorkers_--;
 		uniqueLock.unlock();
 	}
@@ -49,20 +43,35 @@ void Farm::execute(Engine::Agent *agent)
 
 void Farm::registerYourself()
 {
-	rally_->addOffer(
-			eng::Envelope{
-					MainController::getInstance().getPlaces().find("FR")->second
-					, "Farm job."
-					, bundles_ <= desiredBundles_ ? 30 : 1
-			}
-	);
-	rally_->addOffer(
-			eng::Envelope{
-					MainController::getInstance().getPlaces().find("FR")->second
-					, "Bundle pick up."
-					, bundles_ == 0 ? 1 : bundles_
-			}
-	);
+	eng::Envelope const* envelope = nullptr;
+	for ( auto const& element : rally_->getOfferList() )
+	{
+		if ( element.message == "Farm job." )
+		{
+			envelope = &element;
+		}
+	}
+	if ( !envelope )
+	{
+		rally_->addOffer(eng::Envelope{MainController::getInstance().getPlaces().find("FR")->second
+									   , "Farm job."
+									   , bundles_ <= desiredBundles_ ? 30 : 1});
+	}
+
+	envelope = nullptr;
+	for ( auto const& element : rally_->getOfferList() )
+	{
+		if ( element.message == "Bundle pick up." )
+		{
+			envelope = &element;
+		}
+	}
+	if ( !envelope )
+	{
+		rally_->addOffer(eng::Envelope{MainController::getInstance().getPlaces().find("FR")->second
+									   , "Bundle pick up."
+									   , bundles_ == 0 ? 1 : bundles_});
+	}
 }
 
 std::string Farm::getName() const
@@ -97,6 +106,7 @@ void Farm::collectWheat(eng::Agent *agent)
 	float myBundle{0};
 	spdlog::get("main")->info("{} started wheat gathering.", agent->getName());
 
+	spdlog::get("main")->info("Amount of wheat: {}", wheat_);
 	while ( myBundle < bundleWheatSize_ )
 	{
 		std::lock_guard<std::mutex> lockGuard(wheatAccessMutex_);
@@ -124,26 +134,52 @@ void Farm::bundlePickup(eng::Agent *agent)
 	std::lock_guard<std::mutex> lockGuard(bundleAccessMutex_);
 
 	if ( bundles_ == 0 )
-		return;
-
-	if ( bundles_ <= desiredBundles_ )
 	{
 		agent->setOrder(
 				eng::Envelope(
-						MainController::getInstance().getPlaces().find("FR")->second
-						, "Farm job."
-						, desiredBundles_ - bundles_
+						MainController::getInstance().getPlaces().find("RL")->second
 				));
+		registerYourself();
+		return;
+	}
+
+	if ( bundles_ <= desiredBundles_ )
+	{
+		eng::Envelope const* envelope = nullptr;
+		for ( auto const& element : rally_->getOfferList() )
+		{
+			if ( element.message == "Farm job." )
+			{
+				envelope = &element;
+			}
+		}
+		if ( !envelope )
+		{
+			rally_->addOffer(
+					eng::Envelope(
+							MainController::getInstance().getPlaces().find("FR")->second
+							, "Farm job."
+							, desiredBundles_ - bundles_
+					));
+		}
+
 	}
 	if ( bundles_ > 10 )
 	{
-		rally_->addOffer(
-				eng::Envelope{
-						MainController::getInstance().getPlaces().find("FR")->second
-						, "Bundle pick up."
-						, 5
-				}
-			);
+		eng::Envelope const* envelope = nullptr;
+		for ( auto const& element : rally_->getOfferList() )
+		{
+			if ( element.message == "Bundle pick up." )
+			{
+				envelope = &element;
+			}
+		}
+		if ( !envelope )
+		{
+			rally_->addOffer(eng::Envelope{MainController::getInstance().getPlaces().find("FR")->second
+										   , "Bundle pick up."
+										   , bundles_});
+		}
 	}
 
 	agent->setOrder(

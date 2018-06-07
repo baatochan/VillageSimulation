@@ -32,10 +32,6 @@ void MainScreenManager::WindowStorage::draw(sf::RenderWindow *targetWindow)
 	std::lock_guard<std::mutex> placeLockGuard(placeVectorMutex_);
 	std::lock_guard<std::mutex> agentLockGuard(agentMutex_);
 
-	for( auto const& element : God::getCreations() )
-	{
-		targetWindow->draw(*element->getShape());
-	}
 	for( auto const& elementWPtr : placeVector_ )
 	{
 		auto element = elementWPtr.lock();
@@ -43,6 +39,10 @@ void MainScreenManager::WindowStorage::draw(sf::RenderWindow *targetWindow)
 		{
 			targetWindow->draw(*element->getShape());
 		}
+	}
+	for( auto const& element : God::getCreations() )
+	{
+		targetWindow->draw(*element->getShape());
 	}
 }
 

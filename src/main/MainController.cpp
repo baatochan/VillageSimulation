@@ -82,7 +82,7 @@ void MainController::initialiseLogger()
 	spd::get("main")->info("=                  Initialized                   =");
 	spd::get("main")->info("==================================================");
 	spd::get("main")->flush_on(spd::level::debug);
-	spd::get("main")->set_level(spdlog::level::debug);
+	spd::get("main")->set_level(spdlog::level::info);
 }
 
 void MainController::close()

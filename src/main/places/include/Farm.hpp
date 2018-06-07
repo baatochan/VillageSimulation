@@ -16,7 +16,7 @@ class Farm
 	std::thread growingThread_;
 
 	std::optional<sf::Time> lastUpdate_{};
-	const float growRate_{300.f};
+	const float growRate_{25.f};
 	const float collectMax_{0.1f};
 	float wheat_{0.f};
 

@@ -22,6 +22,9 @@ public:
 
 	void printOffers();
 	void addOffer(eng::Envelope envelope);
+
+	std::list<Engine::Envelope> const& getOfferList() const;
+
 	void execute(Engine::Agent *agent) override;
 	std::string getName() const override;
 };

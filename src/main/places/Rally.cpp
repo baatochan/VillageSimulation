@@ -71,3 +71,8 @@ void Rally::printOffers()
 		std::cout <<  elem.target->getName() << ", Amound: "  << elem.amount << "\n";
   }
 }
+
+std::list<Engine::Envelope> const& Rally::getOfferList() const
+{
+	return offerList_;
+}
