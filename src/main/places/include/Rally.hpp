@@ -20,6 +20,7 @@ protected:
 public:
 	Rally();
 
+	void printOffers();
 	void addOffer(eng::Envelope envelope);
 	void execute(Engine::Agent *agent) override;
 	std::string getName() const override;

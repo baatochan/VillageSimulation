@@ -3,6 +3,7 @@
 //
 
 #include <spdlog/spdlog.h>
+#include <iostream>
 #include "Rally.hpp"
 
 std::string Rally::getName() const
@@ -60,4 +61,13 @@ void Rally::addOffer(eng::Envelope envelope)
 
 	offerList_.push_back(envelope);
 	offerSubscription_.notify_all();
+}
+
+void Rally::printOffers()
+{
+	std::cout << "Offers: \n";
+  for ( auto const& elem : offerList_ )
+  {
+		std::cout <<  elem.target->getName() << ", Amound: "  << elem.amount << "\n";
+  }
 }

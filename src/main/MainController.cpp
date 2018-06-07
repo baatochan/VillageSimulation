@@ -10,6 +10,8 @@
 #include <God.hpp>
 #include <Rally.hpp>
 #include <Quarry.hpp>
+#include <Farm.hpp>
+#include <Well.hpp>
 #include "include/MainController.hpp"
 #include "FeedingTrough.hpp"
 
@@ -55,8 +57,16 @@ void MainController::loadPlaces()
 	places_.insert(std::pair("RL", new Rally));
 	windowStoragePtr_->registerNewPlace(places_["RL"]);
 
+	places_.insert(std::pair("WL", new Well));
+	windowStoragePtr_->registerNewPlace(places_["WL"]);
+
+	places_.insert(std::pair("FR", new Farm));
+	windowStoragePtr_->registerNewPlace(places_["FR"]);
+
 	places_.insert(std::pair("QR", new Quarry));
 	windowStoragePtr_->registerNewPlace(places_["QR"]);
+
+
 }
 
 void MainController::allocateStorage()

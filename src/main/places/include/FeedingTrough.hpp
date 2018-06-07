@@ -13,8 +13,8 @@
 
 class FeedingTrough : public eng::Place
 {
-	float foodAmount_{1000.f};
-	float waterAmount_{1000.f};
+	float foodAmount_{10000.f};
+	float waterAmount_{10000.f};
 
 	unsigned availableStools_{10u};
 protected:
@@ -28,6 +28,8 @@ protected:
 protected:
 	FeedingTrough(const sf::Vector2f& size, const sf::Vector2f& position);
 
+	void acceptFood(eng::Agent* agent);
+	void acceptWater(eng::Agent* agent);
 	void feast(Villager* villager);
 	void eat(Villager* villager, int amount);
 	void drink(Villager* villager, int amount);

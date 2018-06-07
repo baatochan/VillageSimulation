@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <MainController.hpp>
 #include <God.hpp>
+#include <Rally.hpp>
 
 namespace MainScreenManager
 {
@@ -49,6 +50,9 @@ namespace MainScreenManager
 						} else if (event.key.code == sf::Keyboard::P)
 						{
 							God::print();
+						} else if ( event.key.code == sf::Keyboard::O)
+						{
+							dynamic_cast<Rally*>(&*MainController::getInstance().getPlaces().find("RL")->second)->printOffers();
 						}
 						break;
 				}
