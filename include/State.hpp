@@ -6,6 +6,7 @@
 
 enum class State
 {
+	STARTING,
 	STOP,
 	STOPPED,
 	RUN,

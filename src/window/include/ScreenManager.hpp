@@ -26,6 +26,7 @@ namespace MainScreenManager
 	 */
 	class ScreenManager
 	{
+	protected:
 		static std::thread screenManagerThread_;
 		static std::unique_ptr<WindowHandler> instance_;
 	public:
@@ -33,7 +34,7 @@ namespace MainScreenManager
 				sf::VideoMode const& videoMode
 				, sf::String const& title
 				, unsigned const& style
-				, std::shared_ptr<WindowStorage> windowStorage = nullptr
+				, std::shared_ptr<WindowStorage> const& windowStorage = nullptr
 		);
 		static void start();
 		static void stop();
